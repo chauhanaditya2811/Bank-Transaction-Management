@@ -47,16 +47,18 @@ async function userRegisterController(req, res){
  * post: /api/auth/login
  */
 async function userLoginController(req, res){
-    const {email, password} = req.body || {};
+    const {email, password, passward} = req.body || {};
+    const normalizedEmail = email?.trim().toLowerCase();
+    const userPassword = password || passward;
 
-    const user = await userModel.findOne({email: email}).select('+password')
-    if(!user || !password || !user.password){
+    const user = await userModel.findOne({email: normalizedEmail}).select('+password')
+    if(!user || !userPassword || !user.password){
         return res.status(401).json({
             success: false,
             message: "email or password is incorrect"
         })
     }
-    const isPasswordValid = await user.comparePassword(password);
+    const isPasswordValid = await user.comparePassword(userPassword);
     if(!isPasswordValid){
         return res.status(401).json({
             success: false,

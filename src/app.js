@@ -20,7 +20,6 @@ const accountRouter = require('./routes/account.routes');
  * use routes
  */
 app.use('/api/auth', authRoutes);
-app.use('/api/account', accountRouter);
 app.use('/api/accounts', accountRouter);
 
 

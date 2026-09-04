@@ -1,9 +1,9 @@
-const {router} = require('express');
+const { Router } = require('express');
 const authMiddleware = require('../middleware/auth.middleware');
-const trasactionController = require('../controllers/transaction.controller');
+const transactionController = require('../controllers/transaction.controller');
 
 
-const transactionRoutes = router();
+const transactionRoutes = Router();
 
 /**
  * post/api/transactions/

@@ -7,7 +7,9 @@ const transactionSchema = new mongoose.Schema({
     fromAccount: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
-        required: [true, 'From account is required'],
+        required: function () {
+            return this.type === 'transfer';
+        },
         index: true
     },
     toAccount: {
@@ -21,6 +23,12 @@ const transactionSchema = new mongoose.Schema({
         enum: ['pending', 'completed', 'failed'],
         message: 'Status can only be pending, completed or failed',
         default: 'pending'
+    },
+    type: {
+        type: String,
+        enum: ['transfer', 'initial_funds'],
+        default: 'transfer',
+        required: true
     },
     amount: {
         type: Number,
